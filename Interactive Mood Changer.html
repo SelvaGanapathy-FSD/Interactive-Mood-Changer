@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Mood Changer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      h1 {
+        color: #333;
+      }
+      .emoji-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .emoji {
+        position: absolute;
+        font-size: 2rem;
+        animation: rain 2s linear forwards, rise 2s linear forwards 2s;
+      }
+      @keyframes rain {
+        0% {
+          transform: translateY(-100px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh);
+          opacity: 1;
+        }
+      }
+      @keyframes rise {
+        0% {
+          transform: translateY(100vh);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px);
+          opacity: 0;
+        }
+      }
+      button {
+        margin: 10px;
+        padding: 10px 20px;
+        background-color: #ffd700;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Interactive Mood Tracker</h1>
+    <p>Select your mood to see the magic!</p>
+
+    <div>
+      <button onclick="changeMood('Happy', '😊')">Happy</button>
+      <button onclick="changeMood('Sad', '😢')">Sad</button>
+      <button onclick="changeMood('Angry', '😡')">Angry</button>
+      <button onclick="changeMood('Relaxed', '😌')">Relaxed</button>
+    </div>
+
+    <h2 id="quote" style="margin-top: 20px; color: #555">
+      Your motivational quote will appear here!
+    </h2>
+    <div id="emoji-container" class="emoji-container"></div>
+
+    <script>
+      function changeMood(mood, emoji) {
+        const body = document.body;
+        const quote = document.getElementById("quote");
+        const emojiContainer = document.getElementById("emoji-container");
+        let bgColor = "";
+        let message = "";
+
+        // erase old emojis
+        emojiContainer.innerHTML = "";
+
+        if (mood === "Happy") {
+          bgColor = "#FFFACD";
+          message = "Keep smiling! The world needs your joy. 😊";
+        } else if (mood === "Sad") {
+          bgColor = "#ADD8E6";
+          message =
+            "Tough times don’t last. You are stronger than you think. 💪";
+        } else if (mood === "Angry") {
+          bgColor = "#FFB6C1";
+          message = "Take a deep breath. Peace is within you. 🧘";
+        } else if (mood === "Relaxed") {
+          bgColor = "#E0FFD6";
+          message = "Enjoy the calmness. It’s your time to recharge. 🌿";
+        }
+
+        body.style.backgroundColor = bgColor;
+        quote.innerText = message;
+
+        // up to down emojis
+        for (let i = 0; i < 25; i++) {
+          const emojiElement = document.createElement("div");
+          emojiElement.classList.add("emoji");
+          emojiElement.innerText = emoji;
+
+          // Random positions and delays
+          emojiElement.style.left = Math.random() * 100 + "vw";
+          emojiElement.style.animationDelay = Math.random() * 0.5 + "s";
+          emojiElement.style.fontSize = Math.random() * 1.5 + 1 + "rem";
+
+          emojiContainer.appendChild(emojiElement);
+        }
+      }
+    </script>
+  </body>
+</html>
